@@ -138,18 +138,6 @@ Here, we have created a datawarehouse where all the information from the perspec
 3. Party Popularity: Which party was the most popular one in the elections of 2018?
 ~~~~
 
-~~~~
-4. Election Results by Province: Which Party was the most successful in each province?
-~~~~
-
-~~~~
-5. Which Candidate won the most number of seats?
-~~~~
-
-~~~~
-6. Provincial Statistics: Most number of votes registered, most number of votes casted, most number of votes registered, largest turnout?
-~~~~
-
 ### ETL PROCEDURE: 
 As explained above, the analytical layer will be produced using the multiple tables and columns to have one denormalized structure that will then be used for analysis. 
 
