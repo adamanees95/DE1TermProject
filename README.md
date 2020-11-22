@@ -223,15 +223,6 @@ ORDER BY SUM(total_valid) DESC;
 
 SELECT * FROM party_popularity;
 ~~~~
-#### ELECTION RESULTS BY PROVINCE:
-~~~~
-~~~~
-#### MOST SUCCESSFUL CANDIDATE: CANDIDATE WITH MOST NUMBER OF SEATS:
-~~~~
-~~~~
-#### VOTING STATISTICS BY PROVINCE:
-~~~~
-~~~~
 
 ### TRIGGERS:
 Triggers are normally used to track changes in the database. The concept is to not only monitor the changes that have been made but also report the changes in form of a message. Triggers are also used to backup the data if new information is to be inserted. The following trigger is designed for the following:
