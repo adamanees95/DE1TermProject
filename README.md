@@ -241,4 +241,60 @@ SELECT * FROM party_popularity;
 #### MOST SUCCESSFUL CANDIDATE: CANDIDATE WITH MOST NUMBER OF SEATS:
 ~~~~
 ~~~~
-####
+#### VOTING STATISTICS BY PROVINCE:
+~~~~
+~~~~
+
+### TRIGGERS:
+Triggers are normally used to track changes in the database. The concept is to not only monitor the changes that have been made but also report the changes in form of a message. Triggers are also used to backup the data if new information is to be inserted. The following trigger is designed for the following:
+	The voting statistics are considered provisional at times when the results are being tallied. This trigger is used to track the data if the information is changed. What it will do is if we change the voting numbers of a particular constituency, the trigger will give an alarm that the data was altered along with the timestamp. Additionally, the trigger will generate a backup file where it will put the previous information and store it for the future. In case of discrepancies with the data such as manipulation for political reasons, these two elements would be a good source of a proactiv measure. 
+	
+~~~~
+-- Trigger(s) --
+
+DROP TABLE IF EXISTS election_info_history;
+
+CREATE TABLE election_info_history(
+ constituency VARCHAR(10) PRIMARY KEY,
+ cand_id INT,
+ cand_name VARCHAR(255),
+ party_id INT,
+ party VARCHAR(255),
+ winner_votes INT,
+ total_votes INT,
+ total_valid INT,
+ total_rejected INT,
+ total_registered INT);
+ 
+DROP TABLE IF EXISTS trigger_history;
+
+CREATE TABLE trigger_history(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    trigger_status VARCHAR(500) NOT NULL,
+    created_at DATETIME NOT NULL);
+
+DROP TRIGGER IF EXISTS election_info_update;
+
+DELIMITER $$
+
+CREATE TRIGGER election_info_update
+BEFORE UPDATE        
+ON constituency_2018 FOR EACH ROW
+BEGIN
+    INSERT INTO election_info_history(constituency,cand_id,cand_name, party_id,party,winner_votes,total_valid,total_rejected,total_registered)
+    VALUES(OLD.constituency,OLD.cand_id,OLD.cand_name, OLD.party_id, OLD.party, OLD.winner_votes, OLD.total_valid, OLD.total_rejected, OLD.total_registered);
+
+    INSERT INTO trigger_history(trigger_status,created_at)
+		VALUES('Old info backup successful',NOW());
+END$$
+
+DELIMITER ;
+
+SET SQL_SAFE_UPDATES = 0;
+
+-- Example --
+UPDATE constituency_2018
+SET total_valid = 157061
+WHERE constituency = 'NA-2';
+~~~~
+
