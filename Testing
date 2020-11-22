@@ -1,0 +1,12 @@
+### OPERATIONAL LAYER ###
+**Create our first database / schema**
+~~~~
+
+SHOW VARIABLES LIKE "secure_file_priv";
+
+DROP SCHEMA IF EXISTS airbnb;
+CREATE SCHEMA airbnb;
+
+-- Set airbnb schema as default
+USE airbnb;
+~~~~
